@@ -40,5 +40,6 @@ The archive scan issue data will be stored in the `data` directory.
 <!---
 
 #CPTAGS:community-supported archive
+#TBICON:images/python_icon.png
 
 -->
