@@ -2,6 +2,7 @@ import re
 import os
 import cloudpassage
 from config import CONFIG
+from config_helper import ConfigHelper
 
 
 class ApiController():
@@ -9,11 +10,13 @@ class ApiController():
     def build_http_session():
         key_id = os.environ['KEY_ID'] or CONFIG['key_id']
         secret_key = os.environ['SECRET_KEY'] or CONFIG['secret_key']
+        config_helper = ConfigHelper()
 
         session = cloudpassage.HaloSession(key_id,
                                            secret_key,
                                            api_port=CONFIG["api_port"],
-                                           api_host=CONFIG["api_hostname"])
+                                           api_host=CONFIG["api_hostname"],
+                                           integration_string=config_helper.ua)
         return cloudpassage.HttpHelper(session)
 
     def get(self, endpoint):
