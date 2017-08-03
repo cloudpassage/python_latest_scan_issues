@@ -41,9 +41,10 @@ class LatestScanIssueProducerThread(Thread):
             elif not scan_data["scan"]["findings"]:
                 pass
             else:
-                issue_data = self.issues.index(agent_id=srv["id"], issue_type=issues_mod)
-                self.out_queue.put([[srv, self.scans.insert_age(scan_data, self.issues.insert_age(issue_data))]])
-                log.write_log("Successfully retreive %s scan from: %s/%s" % (scans_mod, srv["id"], scans_mod))
+                issue_data = self.issues.index(agent_id=srv["id"], issue_type=issues_mod, status='active')
+                if issue_data:
+                    self.out_queue.put([[srv, self.scans.insert_age(scan_data, self.issues.insert_age(issue_data))]])
+                    log.write_log("Successfully retreive %s scan from: %s/%s" % (scans_mod, srv["id"], scans_mod))
             self.queue.task_done()
 
 
